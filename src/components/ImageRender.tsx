@@ -19,11 +19,7 @@ interface Songs {
     artist: string;
     // other properties...
 }
-interface RecentlyPlayedTrack {
-    track: {
-        duration_ms: number;
-    };
-}
+
 
 const bgImage = [
     '/sky1.png',
@@ -75,7 +71,7 @@ const ImageRender = () => {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [selectedBgImage, setSelectedBgImage] = useState<string | null>(null);
     const [selectedQuote, setSelectedQuote] = useState<string | null>(null);
-    const [time, setTime] = useState('0.00');
+    // const [time, setTime] = useState('0.00');
 
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
@@ -140,29 +136,9 @@ const ImageRender = () => {
             }
         };
 
-        const fetchListeningTime = async () => {
-            try {
-                const response = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
-                    headers: { Authorization: `Bearer ${accessToken}` },
-                });
-                if (!response.ok) return;
-
-                const data = await response.json();
-                const totalListeningTimeMs = data.items.reduce(
-                    (acc: number, track: RecentlyPlayedTrack) => acc + track.track.duration_ms,
-                    0
-                );
-                const totalListeningTimeHours = (totalListeningTimeMs / (1000 * 60 * 60)).toFixed(2);
-                setTime(totalListeningTimeHours);
-            } catch (error) {
-                console.error('Error fetching listening time:', error);
-            }
-        };
-
         fetchTopTracks();
         fetchMe();
         fetchTopArtists();
-        fetchListeningTime();
 
         const timer = setTimeout(() => {
             window.location.href = '/';
