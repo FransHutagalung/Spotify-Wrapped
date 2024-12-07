@@ -249,8 +249,8 @@ const ImageRender = () => {
                     </div>
                 </div>
                 <div className="w-full  gap-2 flex  h-[56%]">
-                    <div className="h-full w-1/5 rounded-lg bg-red-700 px-4 py-2 ">
-                        <div className="w-16 h-36 me-2 ">
+                    <div className="h-full w-1/5 rounded-lg bg-red-700 py-2 ">
+                        <div className="w-16 h-36 mx-auto me-2 ">
                             <img className='object-fit opacity-95' src="/headset2.png" alt="" />
                         </div>
                         <div className="pe-3 absolute left-10">
@@ -292,7 +292,7 @@ const ImageRender = () => {
                         {/* <p>Total Listening Time</p> */}
 
                     </div>
-                    <div className="flex w-4/5 gap-2 flex-col">
+                    <div className="flex w-4/5 gap-1 flex-col">
                         <div className="w-full h-1/2 rounded-md bg-green-700 relative">
                             <div className="flex w-full justify-between items-center px-2 pb-1 pt-2">
                                 <div className={`h-8 flex items-center pt-2 justify-center pb-3`}>
@@ -302,7 +302,7 @@ const ImageRender = () => {
                                     <img className='' src="/music.png" alt="Music Icon" />
                                 </div>
                             </div>
-                            <div className="h-2"></div>
+                            <div className="h-1"></div>
                             <hr className='text-black bg-black border-black' />
                             {/* <div className="h-2"></div> */}
                             <div className="px-2">
@@ -322,7 +322,7 @@ const ImageRender = () => {
                                     <img className='text-black' style={{ color: 'white' }} src="/singer.png" alt="Music Icon" />
                                 </div>
                             </div>
-                            <div className="h-2"></div>
+                            <div className="h-1"></div>
                             <hr className='text-black bg-black border-black' />
                             {/* <div className="h-2"></div> */}
                             <div className="px-2">
@@ -359,7 +359,8 @@ const ImageRender = () => {
                 mt-4
                 px-4
                 py-2
-                w-[400px]
+                mx-auto
+                w-[90%]
                 rounded-md
                 hover:bg-blue-300
                 cursor-pointer
