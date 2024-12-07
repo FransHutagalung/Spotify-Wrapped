@@ -7,7 +7,7 @@ export default function Login() {
 
   const handleClick = async () => {
     const client_id = import.meta.env.CLIENT_ID || "8d35d7493e1344f981a4e901732c850e";
-    const redirect_uri = "http://localhost:5173/render";
+    const redirect_uri = "https://spotify-wrapped-fun.vercel.app/render";
     const api_uri = "https://accounts.spotify.com/authorize";
     const scope = [
       "user-read-private",
