@@ -66,6 +66,7 @@ const ImageRender = () => {
     const [downloaded, setdownloaded] = useState(false);
 
     const divRef = useRef<HTMLDivElement>(null);
+    const [loading, setLoading] = useState(true); // Add loading state
     const [bestSongs, setBestSongs] = useState<Songs[]>([]);
     const [favArtists, setFavArtists] = useState<Artist[]>([]);
     const [profile, setProfile] = useState<Profile | null>(null);
@@ -96,56 +97,47 @@ const ImageRender = () => {
 
     useEffect(() => {
         if (!accessToken) {
-            window.location.href = '/'; // Redirect jika tidak ada token
-            return;
+          window.location.href = '/';
+          return;
         }
-
-        const fetchTopTracks = async () => {
-            try {
-                const response = await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5', {
-                    headers: { Authorization: `Bearer ${accessToken}` },
-                });
-                const data = await response.json();
-                setBestSongs(data.items);
-            } catch (error) {
-                console.error('Error fetching top tracks:', error);
-            }
+    
+        const fetchData = async () => {
+          setLoading(true); // Set loading to true when starting fetch
+    
+          try {
+            const responseTopTracks = await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5', {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            const dataTopTracks = await responseTopTracks.json();
+            setBestSongs(dataTopTracks.items);
+    
+            const responseProfile = await fetch('https://api.spotify.com/v1/me', {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            const dataProfile = await responseProfile.json();
+            setProfile(dataProfile);
+    
+            const responseTopArtists = await fetch('https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5', {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            const dataTopArtists = await responseTopArtists.json();
+            setFavArtists(dataTopArtists.items);
+    
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          } finally {
+            setLoading(false); 
+          }
         };
-
-        const fetchMe = async () => {
-            try {
-                const response = await fetch('https://api.spotify.com/v1/me', {
-                    headers: { Authorization: `Bearer ${accessToken}` },
-                });
-                const data = await response.json();
-                setProfile(data);
-            } catch (error) {
-                console.error('Error fetching profile:', error);
-            }
-        };
-
-        const fetchTopArtists = async () => {
-            try {
-                const response = await fetch('https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5', {
-                    headers: { Authorization: `Bearer ${accessToken}` },
-                });
-                const data = await response.json();
-                setFavArtists(data.items);
-            } catch (error) {
-                console.error('Error fetching top artists:', error);
-            }
-        };
-
-        fetchTopTracks();
-        fetchMe();
-        fetchTopArtists();
-
+    
+        fetchData();
+    
         const timer = setTimeout(() => {
-            window.location.href = '/';
+          window.location.href = '/';
         }, expiresIn * 1000);
-
-        return () => clearTimeout(timer); // Bersihkan timer saat komponen unmount atau dependency berubah
-    }, [accessToken, expiresIn]);
+    
+        return () => clearTimeout(timer);
+      }, [accessToken, expiresIn]);
 
     const handleDownload = async (e: React.MouseEvent) => {
         e.preventDefault();
@@ -166,8 +158,13 @@ const ImageRender = () => {
 
         setdownloaded(false);
     };
-
-    return (
+    
+    return loading ? (
+        <div className='flex flex-col items-center p-4'>
+            <p>Loading...</p>
+        </div>
+    ) : 
+    (
         <div className='flex flex-col items-center p-4'>
             <div
                 ref={divRef}
@@ -178,8 +175,8 @@ const ImageRender = () => {
                 flex 
                 relative
                 flex-col
-                px-2
-                py-[2px]
+                px-4
+                py-[4px]
                 '
             >
                 <div className="h-[32%] rounded-md flex flex-col bg-black w-full px-2 py-3 justify-between relative">
@@ -253,8 +250,8 @@ const ImageRender = () => {
                 </div>
                 <div className="w-full  gap-2 flex  h-[56%]">
                     <div className="h-full w-1/5 rounded-lg bg-red-700 px-4 py-2 ">
-                        <div className="bottom-0 right-0 w-16 h-36 me-2 ">
-                            <img className='object-fit opacity-95' src="../../public/headset2.png" alt="" />
+                        <div className="w-16 h-36 me-2 ">
+                            <img className='object-fit opacity-95' src="/headset2.png" alt="" />
                         </div>
                         <div className="pe-3 absolute left-10">
                             <div className="absolute flex mt-[42px]  h-28 flex-col transform rotate-90 origin-center">
@@ -371,6 +368,7 @@ const ImageRender = () => {
                 Download HD Image
             </button>
         </div>
+
     );
 };
 

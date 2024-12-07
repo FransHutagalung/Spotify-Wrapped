@@ -8,6 +8,7 @@ export default function Login() {
   const handleClick = async () => {
     const client_id = import.meta.env.CLIENT_ID || "8d35d7493e1344f981a4e901732c850e";
     const redirect_uri = "https://spotify-wrapped-fun.vercel.app/render";
+    // const redirect_uri2 = "http://localhost:5173/render";
     const api_uri = "https://accounts.spotify.com/authorize";
     const scope = [
       "user-read-private",
@@ -23,8 +24,8 @@ export default function Login() {
     )}&response_type=token&show_dialog=true`;
   };
   return (
-    <div className="flex justify-center items-center flex-col">
-      <div className="w-full mt-10 p-4">
+    <div className="flex justify-center items-center pb-2 flex-col">
+      <div className="w-full mt-10 pt-2  px-4">
         <p className="text-4xl font-semibold">Spotify Wrapped</p>
         <div className="h-2"></div>
         <p className="text-2xl font-semibold">Let’s unwrap your 2024 soundtrack!</p>
