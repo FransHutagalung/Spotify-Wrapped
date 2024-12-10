@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 const ColorCircle = ({ color, isUsed }: { color: string[]; isUsed: boolean }) => {
     return (
