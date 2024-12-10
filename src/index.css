@@ -6,3 +6,15 @@
 *{
     box-sizing: border-box;
 }
+
+@media (max-width: 640px) {
+    /* Sembunyikan scrollbar horizontal pada layar kecil */
+    * {
+      overflow-x: hidden;
+    }
+    /* Pastikan scroll vertikal tetap aktif */
+    body {
+      overflow-x: auto;
+    }
+  }
+  

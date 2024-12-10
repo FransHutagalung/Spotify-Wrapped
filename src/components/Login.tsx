@@ -1,28 +1,28 @@
 
 export default function Login() {
 
-  //    const bearer = new URLSearchParams(window.location.hash.substring(1)).get('bearer');
-  //    console.log(bearer);
 
+const handleClick = async () => {
+  const client_id = import.meta.env.CLIENT_ID || "8d35d7493e1344f981a4e901732c850e";
+  const redirect_uri = "http://localhost:5173/render";
+  // const redirect_uri2 = "http://localhost:5173/render";
+  const api_uri = "https://accounts.spotify.com/authorize";
+  const scope = [
+    "user-read-private",
+    "user-read-email",
+    "user-modify-playback-state",
+    "user-read-playback-state",
+    "user-read-currently-playing",
+    "user-read-recently-played",
+    "user-top-read",
+  ];
+  window.location.href = `${api_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope.join(
+    " "
+  )}&response_type=token&show_dialog=true`;
+};
 
-  const handleClick = async () => {
-    const client_id = import.meta.env.CLIENT_ID || "8d35d7493e1344f981a4e901732c850e";
-    const redirect_uri = "https://spotify-wrapped-fun.vercel.app/render";
-    // const redirect_uri2 = "http://localhost:5173/render";
-    const api_uri = "https://accounts.spotify.com/authorize";
-    const scope = [
-      "user-read-private",
-      "user-read-email",
-      "user-modify-playback-state",
-      "user-read-playback-state",
-      "user-read-currently-playing",
-      "user-read-recently-played",
-      "user-top-read",
-    ];
-    window.location.href = `${api_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope.join(
-      " "
-    )}&response_type=token&show_dialog=true`;
-  };
+  
+  
   return (
     <div className="flex justify-center items-center pb-2 flex-col">
       <div className="w-full mt-10 pt-2  px-4">
